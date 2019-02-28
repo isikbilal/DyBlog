@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DyBlog.Models.SosyalMedya>
+@{
+    ViewBag.Title = "Socials";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Yeni sosyal hesap", "CreateSocial")
+</p>
+
+@if (TempData.Count > 0 && !String.IsNullOrEmpty(TempData["Message"].ToString()))
+{
+    @Html.Raw(TempData["Message"]);
+}
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model=>model.Adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UrlAdres)
+        </th>
+        <th>İşlem</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlAdres)
+            </td>
+            <td>
+                @Html.ActionLink("Düzenle", "EditSocial", new { id = item.sosId }) | @Html.ActionLink("Sil", "DeleteSocial", new { id = item.sosId }, new { onclick = "return confirm('Sosyal hesap silinecek. Emin misin?');" })
+            </td>
+        </tr>
+    }
+
+</table>

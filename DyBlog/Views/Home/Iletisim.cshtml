@@ -1,0 +1,61 @@
+﻿@model DyBlog.Models.GeriBildirim
+
+@{
+    ViewBag.Title = "Iletisim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<main class="with-aside">
+    <header class="page-header">
+        <h2 class="page-title">
+            İletisim
+        </h2>
+    </header>
+    <div class="content-area">
+     
+        <!-- form elements -->
+       @using (Html.BeginForm("Iletisim", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+       {
+        @Html.AntiForgeryToken()
+                <div>
+                    <label>Konu</label>
+                    <br>
+                    @Html.EditorFor(model => model.Konu, new { htmlAttributes = new { @class = "form-control", @type = "required" } })
+                    @Html.ValidationMessageFor(model => model.Konu)
+              
+
+
+                </div>
+                <p class="">
+                    <label class="">
+                        Mesajınız
+                        <br>
+                        <span class="form-control-wrap your-message">
+                                @Html.TextAreaFor(model => model.Mesaj, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Mesaj, "", new { @class = "text-danger" })
+                         </span>
+                    </label>
+                </p>
+                <p>
+                    <input value="Gönder" class="form-control submit" type="submit">
+                </p>
+       }
+        </div>
+</main>
+@if (TempData.Count > 0 && !String.IsNullOrEmpty(TempData["Message"].ToString()))
+{
+    @Html.Raw(TempData["Message"]);
+}
+<style>
+    .alert{position:relative;padding:.75rem 1.25rem;margin-bottom:1rem;border:1px solid transparent;border-radius:.25rem}
+    .alert-dismissible{padding-right:4rem}
+    .alert-dismissible 
+    .close{position:absolute;top:0;right:0;padding:.75rem 1.25rem;color:inherit}
+    .alert-heading{color:inherit}
+    .alert-danger{color:#721c24;background-color:#f8d7da;border-color:#f5c6cb}
+    .alert-success{color:#155724;background-color:#d4edda;border-color:#c3e6cb}
+    .alert-success hr{border-top-color:#b1dfbb}
+    .alert-success 
+    .alert-link{color:#0b2e13}
+</style>

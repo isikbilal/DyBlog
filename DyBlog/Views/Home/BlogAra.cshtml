@@ -1,0 +1,92 @@
+﻿@model IEnumerable<DyBlog.Models.Makale>
+
+@{
+    ViewBag.Title = "BlogAra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Aradığınız İçerikteki Makaleler</h2>
+
+<table id="muslumTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Kategori.KategoriAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Baslik)
+        </th>
+
+        <th>
+            Fotoğraf
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Okuma)
+        </th>
+       
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kategori.KategoriAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uye.KullaniciAdi)
+        </td>
+        <td>
+           <a href="/Home/MakaleDetay/@item.MakaleId"> @Html.DisplayFor(modelItem => item.Baslik)</a>
+        </td>
+        
+        <td>
+            <img src="@item.Foto" alt="@item.Baslik" width="75" class="img-rounded img-responsive"/>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Okuma)
+        </td>
+   
+    </tr>
+}
+
+</table>
+<style>
+    #muslumTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #muslumTable td, #muslumTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #muslumTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #muslumTable tr:hover {
+            background-color: #ddd;
+        }
+
+        #muslumTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #00b9bf;
+            color: white;
+        }
+
+    img {
+        border-radius: 20%;
+        width: 75px;
+    }
+</style>

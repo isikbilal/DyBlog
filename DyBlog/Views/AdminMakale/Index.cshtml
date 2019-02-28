@@ -1,0 +1,124 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<DyBlog.Models.Makale>
+
+@{
+    ViewBag.Title = "Makaleler";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Makaleler</h2>
+
+<p>
+    @Html.ActionLink("Yeni Makale", "Create")
+</p>
+
+@if (TempData.Count > 0 && !String.IsNullOrEmpty(TempData["Message"].ToString()))
+{
+    @Html.Raw(TempData["Message"]);
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Kategori")
+        </th>
+        <th>
+            @Html.Label("Başlık")
+        </th>
+        <th>
+            @Html.Label("İçerik")
+        </th>
+        <th>
+            @Html.Label("Fotoğraf")
+        </th>
+        <th>
+            @Html.Label("Tarih")
+        </th>
+        <th>
+            @Html.Label("Okunma")
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model == null)
+    {
+        <tr>
+            <td colspan="3">Henüz Makale eklenmemiş</td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategori.KategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Baslik)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Icerik)
+                </td>
+                <td>
+                    <img width="75" src="@item.Foto" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tarih)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Okuma)
+                </td>
+                <td>
+                    @Html.ActionLink("Düzenle", "Edit", new { id = item.MakaleId })
+                    @Html.ActionLink("Sil", "Delete", new { id = item.MakaleId }, new { onclick = "return confirm('Makale silinecek. Emin misin?');" })
+                </td>
+
+            </tr>
+        }
+
+    }
+
+</table>
+<div class="col-sm-12 col-md-7">
+    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+        <ul class="pagination">
+            @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
+        </ul>
+    </div>
+</div>
+
+<style>
+    #muslumTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #muslumTable td, #muslumTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #muslumTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #muslumTable tr:hover {
+            background-color: #ddd;
+        }
+
+        #muslumTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #00b9bf;
+            color: white;
+            width: auto;
+        }
+
+    img {
+        border-radius: 20%;
+        width: 75px;
+    }
+</style>

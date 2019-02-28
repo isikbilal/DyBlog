@@ -1,0 +1,33 @@
+﻿@model DyBlog.Models.SosyalMedya
+
+@{
+    ViewBag.Title = "EditSocial";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm("UpdateSocial", "Sosyal"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.sosId)
+
+    <div class="box-body">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adi)
+            @Html.TextBoxFor(model => model.Adi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Adi)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UrlAdres)
+            @Html.TextBoxFor(model => model.UrlAdres, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UrlAdres)
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <input type="submit" class="btn btn-primary" value="Kaydet" />
+    </div>
+}

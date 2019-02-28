@@ -1,0 +1,195 @@
+﻿@model DyBlog.Models.Makale
+
+@{
+    ViewBag.Title = "MakaleDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- post -->
+<article class="post hentry">
+    <div class="post-thumbnail">
+        <img src="@Model.Foto" alt="">
+    </div>
+    <header class="entry-header">
+        <div class="entry-meta">
+            <img src="@Model.Uye.Foto" alt="" class="avatar">
+            <div class="meta">
+                <span class="screen-reader-text">
+                    Posted on
+                </span>
+                <time class="entry-date published">
+                    @string.Format("{0: MMMM yyyy}", Model.Tarih),
+                </time> TARİHİNDE
+                <a href="/Uye/UyeProfil/@Model.Uye.UyeId">
+                    @Model.Uye.AdSoyad
+                </a> TARAFINDAN
+                <a href="#">
+                    @Model.Kategori.KategoriAdi
+                </a> KATEGORİSİ İÇİN YAZILDI
+                <span class="comment-count">
+                    <i class="fa fa-comments">
+                    </i> @Model.Yorums.Count()  YORUM
+                </span>
+                <span class="comment-count">
+                    <i class="fa fa-eye">
+                    </i> @Model.Okuma    Görüntüleme
+                </span>
+                <div class="share">
+                    <ul>
+                        <li class="twitter">
+                            <a href="#">
+                                <i class="fa fa-twitter">
+                                </i>
+                            </a>
+                        </li>
+                        <li class="facebook">
+                            <a href="#">
+                                <i class="fa fa-facebook">
+                                </i>
+                            </a>
+                        </li>
+                        <li class="pinterest">
+                            <a href="#">
+                                <i class="fa fa-pinterest">
+                                </i>
+                            </a>
+                        </li>
+                        <li class="google-plus">
+                            <a href="#">
+                                <i class="fa fa-google-plus">
+                                </i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- .entry-meta -->
+        <h1 class="entry-title">
+            @Model.Baslik
+        </h1>
+    </header>
+    <p>
+        @Html.Raw(Model.Icerik)
+    </p>
+
+</article>
+<div class="hentry-footer">
+    <div class="post-tags">
+        @foreach (var item in Model.Etikets)
+        {
+            <a>@item.EtiketAdi</a>
+        }
+
+    </div>
+</div>
+
+<!-- .entry-meta -->
+<nav class="navigation pagination">
+    <h2 class="screen-reader-text">
+        browse more posts
+    </h2>
+    <div class="nav-links">
+        <a class="prev page-numbers" href="#">
+            ÖNCEKİ
+        </a>
+        <a class="next page-numbers" href="#">
+            SONRAKİ
+        </a>
+    </div>
+</nav>
+<div id="comments" class="comments-area">
+    <h2 class="page-title">
+        @Model.Yorums.Count() YORUM
+    </h2>
+   
+      @foreach (var item in Model.Yorums.ToList())
+      {
+        <ul class="comment-list">
+            <li class="comment depth-1">
+                <div class="avatar">
+                    <img src="@item.Uye.Foto" alt="@item.Uye.AdSoyad">
+                </div>
+                <div class="comment-content">
+                    <h4 class="comment-author">
+                    <a href="/Uye/UyeProfil/@item.Uye.UyeId">   @item.Uye.AdSoyad </a>
+                    </h4>
+                    <span class="comment-meta">
+                        <time class="entry-date published">
+                            @string.Format("{0: MMMM yyyy}", item.Tarih)
+                        </time>
+                    </span>
+                    <p>
+                        @item.Icerik - @if (Convert.ToInt32(Session["uyeid"]) == item.UyeId)
+                        {
+                            <a href="/Home/YorumSil/@item.YorumId" class="comment-link">
+                                Sil
+                            </a>
+                        }
+                    </p>
+
+                    <div class="reply">
+                      
+                        <a href="#" class="comment-reply-link">
+                            YANITLA
+                            
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+      }
+        
+    @if (Session["uyeid"] != null)
+    {
+        <div id="comments" class="comments-area">
+            <div id="respond" class="comment-respond">
+                <h3 id="reply-title" class="comment-reply-title page-title">
+                    YORUM YAZIN
+
+                </h3>
+                <form class="comment-form">
+
+                    <p class="comment-form-comment">
+                        <label for="comment">
+                            yorumunuz
+                        </label>
+                        <textarea id="yorum" typeof="text"   rows="5" ></textarea>
+                    </p>
+
+                    <p class="form-submit">
+                        <input type="submit" id="gonder" class="submit" value="Yorum Yap">
+                    </p>
+                </form>
+            </div>
+            <!-- #respond -->
+        </div>
+    }
+    else
+    {
+        <h2>Makaleye Yorum Yapmak için kullanıcı Girişi Yapmalısınız</h2>
+        <p><a href="/Uye/Login/">Giriş Yap</a></p>
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+                $.ajax({
+                    url: '/Home/OkumaSayisi/',
+                    data:{makaleId:@Model.MakaleId},
+                    type:'POST'
+                   
+                });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#gonder").click(function () {
+                var yorumunuz = $("#yorum").val();
+                $.ajax({
+                    url: '/Home/YorumYap/',
+                    data:{yorum:yorumunuz, makaleId:@Model.MakaleId},
+                    type:'POST',
+                    dataType:'json'
+                });
+            });
+        });
+    </script>
+

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DyBlog.Models.Makale>
+@{
+    Layout = null;
+}
+@foreach (var item in Model)
+{
+    <li>
+        <a href="/Home/MakaleDetay/@item.MakaleId">
+            @item.Baslik
+        </a>
+        <time class="entry-date published">
+            @string.Format("{0: MMMM yyyy}", item.Tarih),
+        </time>
+    </li>
+}

@@ -1,0 +1,101 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<DyBlog.Models.Makale>
+
+@{
+    ViewBag.Title = "Makale";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--Content Baslangic-->
+<header class="page-header">
+    <h2 class="page-title">
+        SON GÖNDERİLER
+    </h2>
+</header>
+<div class="content-area">
+    @foreach (var item in Model)
+    {
+
+   
+    <!-- post1 -->
+    <article class="post">
+        <div class="post-thumbnail">
+            <a href="/Home/MakaleDetay/@item.MakaleId">  
+                <img src="@item.Foto" alt="@item.Baslik">
+            </a>
+        </div>
+        <header class="entry-header">
+            <!--Kategori Baslangic-->
+            <div class="entry-meta post-category">
+                <span class="screen-reader-text">
+                    Posted in
+                </span>
+                <a href="/Home/KategoriMakale/@item.Kategori.KategoriId" rel="bookmark">
+                    @item.Kategori.KategoriAdi
+                </a>
+                <i class="fa fa-tags"> @item.Etikets.Count()
+                </i>
+            </div>
+            <!--Kategori Bitis-->
+            <h3 class="entry-title">
+                <a href="/Home/MakaleDetay/@item.MakaleId" rel="bookmark">
+                  @item.Baslik
+                </a>
+            </h3>
+            <div class="entry-meta">
+                <!--Admin Profil Resmi-->
+                <img src="@item.Uye.Foto" alt="@item.Uye.AdSoyad">
+                <!--Admin Profil Resmi-->
+                <p class="meta">
+                    <span class="screen-reader-text">
+                        Posted on
+                    </span>
+                    <time class="entry-date published">
+                        @string.Format("{0: MMMM yyyy}",item.Tarih),
+                    </time> by
+                    <a href="/Uye/UyeProfil/@item.Uye.UyeId">
+                       @item.Uye.AdSoyad
+                    </a>
+                </p>
+            </div>
+        </header>
+        <div class="entry-content">
+
+            @if (item.Icerik.Length > 150)
+            {
+                <p>
+                    @Html.Raw(item.Icerik.Substring(0, 150)) ...
+                </p>
+            }
+            else
+            {
+                <p>
+                    @Html.Raw(item.Icerik) ...
+
+                </p>
+              
+
+            }
+         
+            
+                <a class="next" href="/Home/MakaleDetay/@item.MakaleId"></a>
+        
+          
+               
+            
+            
+        </div>
+    
+    </article>
+    }
+    <nav class="navigation pagination">
+        <h2 class="screen-reader-text">browse more posts</h2>
+        <div class="nav-links">
+            @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
+
+
+        </div>
+    </nav>
+</div>
+<!--Content Bitis-->
+

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DyBlog.Models.SosyalMedya>
+
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+
+    <a href="@item.UrlAdres">
+        <i class="fa fa-@item.sosClass" title="@item.Adi">
+        </i>
+    </a>
+
+}

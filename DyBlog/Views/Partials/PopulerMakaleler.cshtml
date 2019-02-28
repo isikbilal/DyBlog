@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DyBlog.Models.Makale>
+@{
+    Layout = null;
+}
+<ul>
+    @foreach (var item in Model)
+    {
+
+
+        <li>
+            <span class="pop-count">
+                @item.Okuma
+            </span>
+            <img src="@item.Foto" alt="">
+            <h3>
+                <a href="/Home/MakaleDetay/@item.MakaleId">
+                    @item.Baslik
+                </a>
+            </h3>
+            <p class="entry-meta">
+                <span class="screen-reader-text">
+                    Posted on
+                </span>
+                <time class="entry-date published">
+                    @string.Format("{0: MMMM yyyy}", item.Tarih),
+                </time>
+                by<a href="/Uye/UyeProfil/@item.Uye.UyeId">
+                    @item.Uye.AdSoyad
+                </a>
+            </p>
+        </li>
+    }
+</ul>

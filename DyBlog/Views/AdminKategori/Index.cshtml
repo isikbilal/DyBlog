@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DyBlog.Models.Kategori>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Kategori</h2>
+@if (TempData.Count > 0 && !String.IsNullOrEmpty(TempData["Message"].ToString()))
+{
+    @Html.Raw(TempData["Message"]);
+}
+<p>
+    @Html.ActionLink("Yeni Kategori Oluştur", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.KategoriAdi)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.KategoriAdi)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.KategoriId }) |
+            @Html.ActionLink("Sil", "Delete", new { id = item.KategoriId }, new { onclick = "return confirm('Kategori silinecek. Emin misin?');" })
+
+
+        </td>
+    </tr>
+}
+
+</table>

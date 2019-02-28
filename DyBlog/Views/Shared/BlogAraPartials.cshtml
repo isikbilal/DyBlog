@@ -1,0 +1,15 @@
+﻿ <!--Arama Baslangic-->
+
+@using (Html.BeginForm("BlogAra", "Home", FormMethod.Post,new {@class= "search-form" , enctype = "multipart/form-data" }))
+{
+
+        <input type="search" id="Ara" class="search-field" placeholder="Yazmaya başlayın &hellip;" name="Ara" />
+        <button type="submit" value="Ara" class="go">
+            <i class="fa fa-search">
+            </i>
+        </button>
+
+}
+
+
+<!--Arama Bitis-->

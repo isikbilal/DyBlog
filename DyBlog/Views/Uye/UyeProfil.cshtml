@@ -1,0 +1,96 @@
+﻿@model DyBlog.Models.Uye
+
+@{
+    ViewBag.Title = "UyeProfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Üye Profili</h2>
+<hr />
+<table id="muslumTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Yetki.Yetki1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdSoyad)
+        </th>
+
+        <th>
+            Fotoğraf
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.Yetki.Yetki1)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.AdSoyad)
+        </td>
+
+        <td>
+            <img src="@Model.Foto" alt="@Model.AdSoyad" class="img" />
+        </td>
+    </tr>
+        
+</table>
+
+
+<section class="widget widget_recent_entries">
+    <h2 class="widget-title">
+        Yazarın Son Eklediği Makaleler
+    </h2>
+    <hr />
+    <ul>
+        @foreach (var item in Model.Makales.OrderByDescending(m => m.MakaleId).Take(5))
+        {
+            <li>
+                <a href="/Home/MakaleDetay/@item.MakaleId">
+                    @item.Baslik
+                </a>
+                <time class="entry-date published">
+                    @string.Format("{0: MMMM yyyy}", item.Tarih),
+                </time>
+            </li>
+        }
+    </ul>
+</section>
+<style>
+      #muslumTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #muslumTable td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #muslumTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #muslumTable tr:hover {
+            background-color: #ddd;
+        }
+
+        #muslumTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #00b9bf;
+            color: white;
+        }
+   .img {
+border-radius: 20%;
+    width: 75px;
+}
+</style>

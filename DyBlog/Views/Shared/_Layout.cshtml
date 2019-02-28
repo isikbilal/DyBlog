@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>DyBlog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/Content/css/reset.css">
+
+    <link rel="stylesheet" href="~/Content/css/slick.css">
+
+    <link rel="stylesheet" href="~/Content/css/style.css">
+
+    <script src="~/Content/js/jquery.min.js">
+    </script>
+
+
+</head>
+<body>
+
+    <div class="mobile-navigation slide-menu">
+
+
+        <!--Menu kapatma Baslangic-->
+
+        <span class="close">
+
+            <i class="fa fa-close fa-lg">
+
+            </i>
+
+        </span>
+
+        <!--Menu kapatma Bitis-->
+        <!--Menu Logo Baslangic-->
+
+        <div class="logo">
+
+            <a href="/">
+                <img src="~/Content/images/logo.png" alt="">
+            </a>
+        </div>
+        <!--Menu Logo Bitis-->
+        <!--Kategoriler Baslangic-->
+        <ul id="primary-nav" class="primary-nav">
+            <li class="menu-item">
+                <a href="/">
+                    Anasayfa
+                </a>
+               
+            </li>
+            <li class="menu-item">
+                <a href="/Home/iletisim/">
+                    İletisim
+                </a>
+            </li>
+
+            <li class="menu-item menu-item-has-children">
+                <a href="#">
+                    kategoriler
+                </a>
+                <ul class="sub-menu">
+                    @{Html.RenderAction("KategoriList", "Partials");}
+                </ul>
+            </li>
+            <li class="menu-item menu-item-has-children">
+                <a href="#">
+                    Kullanıcı İşlemleri
+                </a>
+                <ul class="sub-menu">
+
+                    @if (Session["uyeid"] != null)
+                    {
+                        <li class="menu-item">
+                            <a class="nav-link" href="/Uye/Index/@Session["uyeid"]">@Session["AdSoyad"]</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="nav-link" href="/Uye/Logout/">Çıkış</a>
+                        </li>
+                        if (Convert.ToInt32(Session["YetkiId"]) == 1)
+                        {
+                            <li class="menu-item">
+                                <a class="nav-link" href="/Admin/Index/">Admin Panali</a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="menu-item">
+                            <a class="nav-link" href="/Uye/Login/">Giriş Yap</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="nav-link" href="/Uye/Create/">Üye Kayıt</a>
+                        </li>
+                    }
+                </ul>
+            </li>
+
+        </ul>
+      
+        <!--Kategoriler Bitis-->
+        <!--Menudeki Sosyal Aglar Baslangic-->
+       <div class="widget widget_social">
+           @{Html.RenderAction("SosyalMedya", "Partials");}
+          
+    </div>
+        <!--Menudeki Sosyal Aglar Bitis-->
+        <!--Hakkimizda Baslangic-->
+        <div class="widget widget_about">
+            <img src="media/aboutme.jpg" alt="">
+            <h3 class="widget-title">
+                Hakkimda
+            </h3>
+            <p>
+                @{Html.RenderAction("Hakkimda", "Partials");}
+            </p>
+        </div>
+        <!--Hakkimizda Bitis-->
+    </div>
+
+    <!--Menu Bitis-->
+    <!--Menu Ortalama Baslangic-->
+    <span class="toggle-menu sticky-menu">
+        <i class="fa fa-bars">
+        </i>
+    </span>
+    <div class="container">
+        <!--Menu Ortalama Bitis-->
+
+        <header>
+
+            <!--Menu Baslangic-->
+            <ul>
+                <li class="menu toggle-menu">
+                    <i class="fa fa-bars">
+                    </i>
+                </li>
+                <!--Menu Bitis-->
+                <!--Logo Baslangic-->
+                <li class="logo">
+                    <a href="/">
+                        <img src="~/Content/images/logo.png" alt="">
+                    </a>
+                </li>
+                <!--Logo Bitis-->
+                <!--Arama Baslangic-->
+                <li class="search">
+                    <i class="fa fa-search">
+                    </i>
+                </li>
+
+            </ul>
+
+           @Html.Partial("BlogAraPartials")
+            <!--Arama Bitis-->
+
+        </header>
+        <!--Content Baslangic-->
+        <main class="with-aside">
+
+            <div class="content-area">
+
+                @RenderBody()
+
+            </div>
+        </main>
+        <!--Content Bitis-->
+        <!--Sidebar baslangic-->
+        <aside class="sidebar-right">
+            <section class="widget cavan_recent_posts">
+                <h2>
+                    POPÜLER GÖNDERİLER
+                </h2>
+                @{Html.RenderAction("PopulerMakaleler", "Partials");}
+
+            </section>
+            <section class="widget cavan_categories">
+                <h2 class="widget-title">
+                    KATEGORİLER
+                </h2>
+                <ul>
+                    @{Html.RenderAction("Kategori", "Partials");}
+
+
+                </ul>
+            </section>
+            <section class="widget widget_recent_entries">
+                <h2 class="widget-title">
+                    SON GÖNDERİLER
+                </h2>
+                <ul>
+                   @{Html.RenderAction("SonGonderi", "Partials");}
+
+                </ul>
+            </section>
+            <section class="widget widget_mc4wp_form_widget">
+                <h2 class="widget-title">
+                    E-BÜLTEN
+                </h2>
+                <p>
+                    <label>
+                        HAFTALIK BÜLTENİMİZE ABONE OLUN
+                    </label>
+                    <input name="EMAIL" placeholder="E-posta adresiniz:" required="" type="email">
+                </p>
+                <p>
+                    <input value="Kaydol" type="submit">
+                </p>
+            </section>
+        </aside>
+        <!--Sidebar Bitis-->
+        <!--Footer Baslangic-->
+        <footer>
+
+            <div style="width:%100; height:50px;">
+
+                <div style="position:relative; display:table; width:%33; float:left ">
+                    <i class="clear copyright">Dyblog Medya - Tüm Haklari Saklidir </i>
+
+                    <a href="#">
+                </div>
+
+                <div style=" position relative;display:table;width:%33; float:right">
+                    <a href="contact.html">
+                        İletişim
+                    </a>
+                    <a href="#">
+                        Makaleler
+                    </a>
+                </div>
+                <center>
+
+                    <div style="position: relative;display:table;width:%33;">
+
+                        <a>
+                            <i class="fa fa-twitter">
+
+                            </i>
+
+                            Twitter
+
+                        </a>
+
+                        <a href="#">
+
+                            <i class="fa fa-facebook">
+
+                            </i>
+                            Facebook
+
+                        </a>
+
+                        <a href="#">
+
+                            <i class="fa fa-pinterest">
+
+                            </i>
+                            Pinterest
+
+                        </a>
+
+                        <a href="#">
+
+                            <i class="fa fa-youtube">
+
+                            </i>
+                            Youtube
+
+                        </a>
+
+                        <a href="#">
+
+                            <i class="fa fa-instagram">
+
+                            </i>
+                            Instagram
+
+                        </a>
+                    </div>
+                </center>
+            </div>
+
+        </footer>
+        <!--Footer Bitis-->
+        <!-- Javascript Baslangic-->
+        <script>
+            $(document).ready(function () { $('.slider').slick({ dots: true, infinite: true, autoplay: true, autoplaySpeed: 3000, speed: 800, }); });
+        </script>
+        <script src="~/Content/js/slick.min.js">
+        </script>
+        <script src="~/Content/js/main.js">
+        </script>
+        <!--JavaScript Bitis-->
+
+</body>
+</html>

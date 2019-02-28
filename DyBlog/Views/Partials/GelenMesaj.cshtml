@@ -1,0 +1,17 @@
+﻿@model IEnumerable<DyBlog.Models.GeriBildirim>
+@{
+    Layout = null;
+}
+
+
+@foreach (var item in Model)
+{
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="/Admin/GelenMesajList/@item.id">
+        <strong>@item.Uye.AdSoyad</strong>
+        <span class="small float-right text-muted">@item.Tarih</span>
+        <div class="dropdown-message small">@item.Mesaj</div>
+    </a>
+}
+
+

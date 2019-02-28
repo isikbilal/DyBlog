@@ -1,0 +1,16 @@
+﻿@model IEnumerable<DyBlog.Models.Kategori>
+
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+
+    <li class="menu-item">
+        <a href="/Home/KategoriMakale/@item.KategoriId">@item.KategoriAdi</a>
+    </li>
+
+}
+
+

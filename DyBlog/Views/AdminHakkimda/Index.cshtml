@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DyBlog.Models.Hakkimda>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Hakkımızda</h2>
+@if (TempData.Count > 0 && !String.IsNullOrEmpty(TempData["Message"].ToString()))
+{
+    @Html.Raw(TempData["Message"]);
+}
+@*<p>
+    @Html.ActionLink("Yeni Hakımızda Bilgi Oluştur", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.icerik)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.icerik)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.hak_id }) 
+@*@Html.ActionLink("Sil", "Delete", new { id = item.hak_id }, new { onclick = "return confirm('Kategori silinecek. Emin misin?');" })*@
+        </td>
+    </tr>
+}
+
+</table>
